@@ -1,0 +1,110 @@
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <title>CRUD ROOM</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div class="container">
+            <h1>CRUD ROOM</h1>
+            <hr>
+            <div>
+                <input name='id' type='hidden' />
+                <div class="form-group">
+                    <label for="hotelName"></label>
+                    <input class='form-control' name='hotelName' placeholder='hotel name' />
+                </div>
+                <div class="form-group">
+                    <label for="roomName"></label>
+                    <input class='form-control' name='roomName' placeholder='room name' />
+                </div>
+                <div class="form-group">
+                    <label for="description"></label>
+                    <input class='form-control' name='description' placeholder='description' />
+                </div>
+                <div class="form-group">
+                    <input type="checkbox" name="available">available<br>
+                </div>
+                <button class='btn btn-success' save>Salvar</button>
+            </div>
+
+            <table class="table" id='rooms'>
+                <thead>
+                    <tr>
+                        <th>Hotel Name</th>
+                        <th>Room Name</th>
+                        <th>Description</th>
+                        <th>Available</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="roomsRows"></tbody>
+            </table>
+        </div>
+
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+
+        <script>
+            const API = 'http://localhost:3000'
+            const createButton = (label, type) => {
+                return $('<button>').addClass(`btn btn-${type}`).html(label)
+            }
+            const renderRows = rooms => {
+                const rows = rooms.map(room => {
+                    const updateButton = createButton('Update', 'warning')
+                    updateButton.click(() => loadRoom(room))
+                    const removeButton = createButton('Delete', 'danger')
+                    removeButton.click(() => removeRoom(room))
+                    return $('<tr>')
+                        .append($('<td>').append(room.hotelName))
+                        .append($('<td>').append(room.roomName))
+                        .append($('<td>').append(room.description))
+                        .append($('<td>').append(''+room.available))
+                        .append($('<td>').append(updateButton).append(removeButton))
+                })
+                $('#roomsRows').html(rows)
+            }
+            const loadRoom = room => {
+                $('[name=id]').val(room._id)
+                $('[name=hotelName]').val(room.hotelName)
+                $('[name=roomName]').val(room.roomName)
+                $('[name=description]').val(room.description)
+                $('[name=available]').prop('checked', room.available)
+
+            }
+            const removeRoom = room => {
+                $.ajax({
+                    method: 'DELETE',
+                    url: `${API}/rooms/${room._id}`,
+                    success: getRooms
+                })
+            }
+            const getRooms = () => {
+                $.ajax({
+                    url: `${API}/rooms`,
+                    success: rooms => {
+                        renderRows(rooms)
+                        $('[name]').val('')
+                    }
+                })
+            }
+            const saveRoom = () => {
+                const _id = $('[name=id]').val()
+                const hotelName = $('[name=hotelName]').val()
+                const roomName = $('[name=roomName]').val()
+                const description = $('[name=description]').val()
+                const available = $('[name=available]:checked').length > 0
+                $.ajax({
+                    method: _id ? 'PUT' : 'POST',
+                    url: `${API}/rooms/${_id}`,
+                    data: _id ? { _id, hotelName, roomName, description, available } : { hotelName, roomName, description, available },
+                    success: getRooms
+                })
+            }
+            $(() => {
+                getRooms()
+                $('[save]').click(saveRoom)
+            })
+        </script>
+    </body>
+</html>
