@@ -7,11 +7,11 @@ services:
     volumes:
       - ./hotel-booking-service:/backend
     ports:
-      - 3000:3000
-    command: bash -c "cd /backend && npm i && node app"
+      - 7171:7171
+    command: bash -c "cd /backend && npm i && npm install -g nodemon && nodemon app.js"
   frontend:
     image: nginx:1.13
     volumes:
       - ./hotel-booking-front:/usr/share/nginx/html/
     ports:
-      - 80:80
+      - 7172:80

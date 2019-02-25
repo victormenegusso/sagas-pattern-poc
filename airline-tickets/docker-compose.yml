@@ -1,0 +1,20 @@
+version: '3'
+services:
+  app:
+    image: python:3.6
+    volumes:
+      # Aplicaçãos
+      - ./airline-tickets-service:/airline-tickets-service
+    ports:
+      - 7070:7070
+    working_dir: /airline-tickets-service
+    command: bash -c "pip install bottle==0.12.13 psycopg2==2.7.1 redis==2.10.5 && python -u app.py"
+    environment:
+      - DB_NAME=airline_tickets
+
+  db: 
+    image: postgres:9.6
+    volumes:
+      # Scripts | ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql -> padrão da imagem
+      - ./db-sql:/scripts
+      - ./db-sql/init.sql:/docker-entrypoint-initdb.d/init.sql
