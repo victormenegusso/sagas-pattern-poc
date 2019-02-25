@@ -1,12 +1,12 @@
 <html>
     <head>
         <meta charset='utf-8'>
-        <title>CRUD ROOM</title>
+        <title>CRUD AIRLINE TICKETS</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     </head>
     <body>
         <div class="container">
-            <h1>CRUD ROOM</h1>
+            <h1>CRUD AIRLINE TICKETS</h1>
             <hr>
             <div>
                 <input name='id' type='hidden' />
@@ -45,7 +45,7 @@
         <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
 
         <script>
-            const API = 'http://localhost:7171'
+            const API = 'http://localhost:3000'
             const createButton = (label, type) => {
                 return $('<button>').addClass(`btn btn-${type}`).html(label)
             }
@@ -102,7 +102,7 @@
                 })
             }
             $(() => {
-                getRooms()
+                //getRooms()
                 $('[save]').click(saveRoom)
             })
         </script>
