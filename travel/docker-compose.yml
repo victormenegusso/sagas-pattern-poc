@@ -1,0 +1,9 @@
+version: '3'
+services:
+  backend:
+    image: node:8.1
+    volumes:
+      - ./travel-service:/backend
+    ports:
+      - 8080:8080
+    command: bash -c "cd /backend && npm i && npm install -g nodemon && nodemon app.js"
