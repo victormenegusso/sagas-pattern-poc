@@ -1,0 +1,11 @@
+version: '3'
+services:
+  db:
+    image: mongo:3.4
+  backend:
+    image: node:8.1
+    volumes:
+      - ./car-rental-service:/backend
+    ports:
+      - 7171:7171
+    command: bash -c "cd /backend && npm i && npm install -g nodemon && nodemon app.js"
