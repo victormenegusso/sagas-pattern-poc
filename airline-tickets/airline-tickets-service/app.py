@@ -66,7 +66,7 @@ class Sender(Bottle):
         data = json.dumps(cur.fetchall(), indent=2)
         cur.close() 
 
-        return data
+        return datas
 
     # buy a ticket
     def buy(self, ticket_id):
