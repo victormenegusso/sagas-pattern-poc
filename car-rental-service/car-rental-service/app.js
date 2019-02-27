@@ -63,6 +63,6 @@ server.post('/rent/undo', function (req, res) {
 })
 
 // Start Server
-const port = 7272
+const port = 7171
 console.log(`INITIALIZING CAR SERVICE ON PORT ${port}`)
 server.listen(port)
