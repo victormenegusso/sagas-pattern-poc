@@ -14,7 +14,7 @@ class Sender(Bottle):
         self.route('/buy/undo', method='POST', callback=self.apiUndoBuy)
         
         # db service ( compose )
-        db_host = os.getenv('DB_HOST', 'db')
+        db_host = os.getenv('DB_HOST', 'airline-db')
         db_user = os.getenv('DB_USER', 'postgres')
         db_name = os.getenv('DB_NAME', 'airline_tickets')
         dsn = f'dbname={db_name} user={db_user} host={db_host}'
@@ -66,7 +66,7 @@ class Sender(Bottle):
         data = json.dumps(cur.fetchall(), indent=2)
         cur.close() 
 
-        return datas
+        return data
 
     # buy a ticket
     def buy(self, ticket_id):
