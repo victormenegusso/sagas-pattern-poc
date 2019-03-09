@@ -9,7 +9,7 @@ const cors = require('cors')
 mongoose.Promise = global.Promise
 
 // /db/ -> service in docker compose
-mongoose.connect('mongodb://db/mydb')
+mongoose.connect('mongodb://credit-db/mydb')
 
 // Middlewares
 server.use(bodyParser.urlencoded({extended:true}))

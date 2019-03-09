@@ -6,8 +6,9 @@ const axios = require('axios')
 
 // APIs
 const airline_base = 'http://airline-app:7070/tickets'
-const hotel_base = 'http://localhost:7171/rooms'
-const car_base = 'http://localhost:7272/'
+const hotel_base = 'http://hotel-booking-app:7171/rooms'
+const car_base = 'http://car-rental-app:7272/'
+const credit_base = 'http://credit-app-app:7178/'
 
 // Middlewares
 server.use(bodyParser.urlencoded({ extended: true }))
@@ -31,7 +32,7 @@ server.get('/', async function (req, res) {
     //console.log(r)
 
     // air line
-    /*const r2 = await axios.get(hotel_base)
+    const r2 = await axios.get(hotel_base)
         .then(response => {
             console.log(response.data)
             return true
@@ -40,7 +41,7 @@ server.get('/', async function (req, res) {
             console.log(error)
             return false
         })
-    console.log(r2)*/
+    console.log(r2)
 })
 
 // Start Server
