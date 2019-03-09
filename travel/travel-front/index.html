@@ -1,0 +1,39 @@
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <title>Travel SAGA Exemple</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
+<body>
+
+    <form>
+        <div class="container" id="container">
+            <h1>Travel SAGA</h1>
+
+        </div>
+        <button class='btn btn-success' save>Travel</button>
+    </form>
+
+    <div class="container" id="containerINIT">
+        <h1>INIT DATABASES</h1>
+    </div>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <script src='hotel.js'></script>
+
+    <script>
+
+        const saveRoom = () => {
+
+            console.log($("input[name='hotel_room_id']:checked").val())
+        }
+
+        $(() => {
+            $('[save]').click(saveRoom)
+        })
+    </script>
+</body>
+
+</html>
