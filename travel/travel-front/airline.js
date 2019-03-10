@@ -15,7 +15,6 @@ const renderTableAirline = () => {
         <tbody id="roomsTickets"></tbody>
     </table>`
 
-    console.log(table)
     $('#container').append(table)
 }
 

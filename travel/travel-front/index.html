@@ -23,6 +23,7 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
     <script src='hotel.js'></script>
     <script src='airline.js'></script>
+    <script src='car.js'></script>
 
     <script>
 
@@ -30,11 +31,12 @@
 
             const idRoom = $("input[name='hotel_room_id']:checked").val()
             const idTicket = $("input[name='ticket_id']:checked").val()
+            const idCar = $("input[name='car_id']:checked").val()
 
             
-            console.log(`${idRoom} -- ${idTicket}`)
+            console.log(`${idRoom} -- ${idTicket} -- ${idCar}`)
 
-            alert(`${idRoom} -- ${idTicket}`)
+            alert(`${idRoom} -- ${idTicket} -- ${idCar}`)
         }
 
         $(() => {
