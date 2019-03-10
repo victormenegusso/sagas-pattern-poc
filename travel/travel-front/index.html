@@ -26,25 +26,7 @@
     <script src='car.js'></script>
     <script src='credit.js'></script>
 
-    <script>
-
-        const buyTravel = () => {
-
-            const idRoom = $("input[name='hotel_room_id']:checked").val()
-            const idTicket = $("input[name='ticket_id']:checked").val()
-            const idCar = $("input[name='car_id']:checked").val()
-            const idAccount = $("input[name='account_id']:checked").val()
-
-            
-            console.log(`${idRoom} -- ${idTicket} -- ${idCar} -- ${idAccount}`)
-
-            alert(`${idRoom} -- ${idTicket} -- ${idCar} -- ${idAccount}`)
-        }
-
-        $(() => {
-            $('[save]').click(buyTravel)
-        })
-    </script>
+    <script src="travel.js"></script>
 </body>
 
 </html>

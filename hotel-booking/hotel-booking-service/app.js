@@ -35,7 +35,12 @@ server.post('/buy', function (req, res) {
     const roomModel = mongoose.model('Room')
     roomModel.findOne({_id: req.body.room_id}, (err,room) => {
         if(room == undefined) {
-            res.send({'status':'error'})
+            res.status(400).send({'status':'error'})
+            return
+        }
+
+        if(!room.available) {
+            res.status(400).send({'status':'error'})
             return
         }
 

@@ -5,8 +5,8 @@ const cors = require('cors')
 const axios = require('axios')
 
 // APIs
-const airline_base = 'http://airline-app:7070/tickets'
-const hotel_base = 'http://hotel-booking-app:7171/rooms'
+const airline_base = 'http://airline-app:7070/'
+const hotel_base = 'http://hotel-booking-app:7171/'
 const car_base = 'http://car-rental-app:7272/'
 const credit_base = 'http://credit-app-app:7178/'
 
@@ -15,11 +15,17 @@ server.use(bodyParser.urlencoded({ extended: true }))
 server.use(bodyParser.json())
 server.use(cors())
 
-server.get('/', async function (req, res) {
-    console.log('TESTE ORQUESTRACAO')
+server.post('/travel', async function (req, res) {
+    
+    const idTicket = req.body.idTicket
+    const idRoom = req.body.idRoom
+    const idCar = req.body.idCar
+    const idAccount = req.body.idAccount
+
+    console.log(`${idRoom} -- ${idTicket} -- ${idCar} -- ${idAccount}`)
 
     // air line
-    const r = await axios.get(airline_base)
+    const r = await axios.post(`${airline_base}buy`, {'ticket_id':idTicket})
         .then(response => {
             console.log(response.data)
             return true
@@ -28,20 +34,31 @@ server.get('/', async function (req, res) {
             console.log(error)
             return false
         })
-    console.log('ae')
-    //console.log(r)
+    
+    if(!r) {
+        res.status(400).send('falha ao reservar o ticket')
+        return
+    }
 
-    // air line
-    const r2 = await axios.get(hotel_base)
-        .then(response => {
-            console.log(response.data)
-            return true
-        })
-        .catch(error => {
-            console.log(error)
-            return false
-        })
-    console.log(r2)
+    // room
+    const r2 = await axios.post(`${hotel_base}buy`, {'room_id':idRoom})
+    .then(response => {
+        console.log(response.data)
+        return true
+    })
+    .catch(error => {
+        console.log(error)
+        // cancela o air line
+        axios.post(`${airline_base}buy/undo`, {'ticket_id':idTicket})
+        return false
+    })
+    
+    if(!r2) {
+        res.status(400).send('falha ao reservar o hotel')
+        return
+    }
+
+    res.status(200).send({idRoom, idTicket, idCar, idAccount})
 })
 
 // Start Server
