@@ -6,6 +6,7 @@ const renderTableHotel = () => {
     <table class="table" id='rooms'>
         <thead>
             <tr>
+                <th>id</th>
                 <th>Hotel Name</th>
                 <th>Room Name</th>
                 <th>Description</th>

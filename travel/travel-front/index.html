@@ -22,16 +22,23 @@
 
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
     <script src='hotel.js'></script>
+    <script src='airline.js'></script>
 
     <script>
 
-        const saveRoom = () => {
+        const buyTravel = () => {
 
-            console.log($("input[name='hotel_room_id']:checked").val())
+            const idRoom = $("input[name='hotel_room_id']:checked").val()
+            const idTicket = $("input[name='ticket_id']:checked").val()
+
+            
+            console.log(`${idRoom} -- ${idTicket}`)
+
+            alert(`${idRoom} -- ${idTicket}`)
         }
 
         $(() => {
-            $('[save]').click(saveRoom)
+            $('[save]').click(buyTravel)
         })
     </script>
 </body>
