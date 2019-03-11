@@ -1,11 +1,19 @@
 version: '3'
+
+networks:
+  network_saga_comunication:
+    external: true
+
 services:
-  db:
+  credit-db:
     image: mongo:3.4
-  backend:
+  credit-app:
     image: node:8.1
     volumes:
       - ./credit-service:/backend
     ports:
       - 7178:7178
     command: bash -c "cd /backend && npm i && npm install -g nodemon && nodemon app.js"
+    networks:
+      - default
+      - network_saga_comunication

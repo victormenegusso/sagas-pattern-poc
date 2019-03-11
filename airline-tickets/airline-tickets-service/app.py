@@ -2,19 +2,33 @@ import psycopg2
 import json
 import os
 from bottle import Bottle, request, response
- 
+
+class EnableCors(object):
+    def apply(self, fn, context):
+        def _enable_cors(*args, **kwargs):
+            # set CORS headers
+            response.headers['Access-Control-Allow-Origin'] = '*'
+            response.headers['Access-Control-Allow-Methods'] = '*'
+            response.headers['Access-Control-Allow-Headers'] = '*'
+
+            if request.method != 'OPTIONS':
+                return fn(*args, **kwargs)
+        return _enable_cors
+
 class Sender(Bottle):
     def __init__(self):
         super().__init__()
         
         # routes
-        self.route('/tickets', method='POST', callback=self.apiSave)
+        self.route('/tickets', method=['POST','OPTIONS'], callback=self.apiSave)
         self.route('/tickets', method='GET', callback=self.apiList)
-        self.route('/buy', method='POST', callback=self.apiBuy)
-        self.route('/buy/undo', method='POST', callback=self.apiUndoBuy)
+        self.route('/buy', method=['POST','OPTIONS'], callback=self.apiBuy)
+        self.route('/buy/undo', method=['POST','OPTIONS'], callback=self.apiUndoBuy)
         
+        self.install(EnableCors())
+
         # db service ( compose )
-        db_host = os.getenv('DB_HOST', 'db')
+        db_host = os.getenv('DB_HOST', 'airline-db')
         db_user = os.getenv('DB_USER', 'postgres')
         db_name = os.getenv('DB_NAME', 'airline_tickets')
         dsn = f'dbname={db_name} user={db_user} host={db_host}'
@@ -66,7 +80,7 @@ class Sender(Bottle):
         data = json.dumps(cur.fetchall(), indent=2)
         cur.close() 
 
-        return datas
+        return data
 
     # buy a ticket
     def buy(self, ticket_id):

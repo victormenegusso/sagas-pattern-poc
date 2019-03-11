@@ -1,6 +1,11 @@
 version: '3'
+
+networks:
+  network_saga_comunication:
+    external: true
+
 services:
-  app:
+  airline-app:
     image: python:3.6
     volumes:
       # Aplicaçãos
@@ -11,8 +16,12 @@ services:
     command: bash -c "pip install bottle==0.12.13 psycopg2==2.7.1 redis==2.10.5 && python -u app.py"
     environment:
       - DB_NAME=airline_tickets
+    networks:
+      - default
+      - network_saga_comunication
 
-  db: 
+
+  airline-db: 
     image: postgres:9.6
     volumes:
       # Scripts | ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql -> padrão da imagem
